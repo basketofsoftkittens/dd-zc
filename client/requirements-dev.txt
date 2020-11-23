@@ -1,0 +1,5 @@
+black
+ipdb
+ipython
+nose2
+python-language-server[all]

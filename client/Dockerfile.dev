@@ -1,0 +1,22 @@
+# Specify a base image
+FROM python:3
+
+WORKDIR /usr/app
+
+# Install dependencies
+RUN pip install virtualenv \
+  && rm -rf /var/cache/apk/*
+
+## Only reinstall deps if requirements.txt changed
+COPY requirements.txt .
+COPY requirements-dev.txt .
+RUN pip install -r requirements.txt
+RUN pip install -r requirements-dev.txt
+
+COPY . .
+ENV FLASK_ENV development
+ENV FLASK_APP app.py
+EXPOSE 5000
+
+# Default command
+CMD ["flask", "run", "-h", "0.0.0.0"]
